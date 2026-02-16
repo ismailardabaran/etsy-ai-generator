@@ -9,17 +9,12 @@ st.set_page_config(
     layout="centered"
 )
 
-# --- CSS İLE GİZLEME VE TEMİZLİK ---
 hide_streamlit_style = """
 <style>
-/* Üstteki renkli şeridi ve Deploy butonunu gizle */
+
 header {visibility: hidden;}
 .stDeployButton {display:none;}
 
-/* Alttaki 'Made with Streamlit' yazısını gizle */
-footer {visibility: hidden;}
-
-/* Input alanlarındaki talimatları gizlemeye çalış (Tarayıcıya göre değişebilir) */
 div[data-testid="InputInstructions"] > span:nth-child(1) {
     visibility: hidden;
 }
@@ -66,11 +61,14 @@ if submitted:
             
             # 2. Display Results
             if "Error" in ai_result or "Hata" in ai_result:
-                st.error("⚠️ Yetersiz Bakiye veya API Hatası. Lütfen OpenAI hesabına kredi yüklediğinden emin ol.")
+                st.error("⚠️ Insufficient Balance or API Error.")
                 st.error(ai_result)
             else:
                 st.success("Success! Here is your optimized listing:")
-                st.text_area("Your Results (Copy & Paste)", value=ai_result, height=400)
+                
+                st.markdown("👇 **Copy Code**")
+                st.code(ai_result, language=None)
+                # -------------------------
                 
                 # 3. Create PDF
                 pdf_data = create_pdf(ai_result)
@@ -85,4 +83,4 @@ if submitted:
 
 # Footer
 st.markdown("---")
-st.caption("Powered by Muun AI")
+st.caption("Powered by İsmail Arda Baran | Muun AI © 2025")
